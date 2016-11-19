@@ -9,7 +9,11 @@
 // Released under MIT License http://opensource.org/licenses/mit-license.php
 
 #include <Wire.h>
+#if (defined(__AVR__))
+#include <avr\pgmspace.h>
+#else
 #include <pgmspace.h>
+#endif
 #include "Sodaq_DS3231.h"
 #include "Arduino.h"
 
@@ -213,7 +217,7 @@ uint8_t Sodaq_DS3231::begin(void) {
 
   unsigned char ctReg=0;
   
-  Wire.begin(4,5);
+  Wire.begin();
   ctReg |= 0b00011100; 
   writeRegister(DS3231_CONTROL_REG, ctReg);     //CONTROL Register Address
   delay(10);
